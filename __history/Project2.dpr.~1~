@@ -1,0 +1,16 @@
+program Project2;
+
+uses
+  Vcl.Forms,
+  pantalla1 in 'pantalla1.pas' {Form1},
+  pantalla3 in 'pantalla3.pas' {mantenimiento1};
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.MainFormOnTaskbar := True;
+  Application.CreateForm(TForm1, Form1);
+  Application.CreateForm(Tmantenimiento1, mantenimiento1);
+  Application.Run;
+end.

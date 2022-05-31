@@ -1,0 +1,101 @@
+unit pantalla3;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
+  System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, Vcl.StdCtrls, Vcl.Grids,
+  Vcl.DBGrids, Vcl.Mask, Vcl.DBCtrls, Vcl.ExtCtrls, Unit4, Datasnap.DBClient;
+
+type
+  TForm3 = class(TForm)
+    Label1: TLabel;
+    DBGrid1: TDBGrid;
+    Button1: TButton;
+    Button2: TButton;
+    DataSourceTitulos: TDataSource;
+    Button3: TButton;
+    Button4: TButton;
+    procedure Button2Click(Sender: TObject);
+    procedure Button4Click(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure Button3Click(Sender: TObject);
+    procedure DBGrid1DrawColumnCell(Sender: TObject; const Rect: TRect;
+      DataCol: Integer; Column: TColumn; State: TGridDrawState);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form3: TForm3;
+
+implementation
+
+{$R *.dfm}
+
+procedure TForm3.Button2Click(Sender: TObject);
+begin
+  self.Close;
+end;
+
+
+procedure TForm3.Button3Click(Sender: TObject);
+var
+DM2:TDataModule4;
+begin
+
+end;
+
+procedure TForm3.Button4Click(Sender: TObject);
+var
+  CadSQL:string;
+  DM:TDataModule4;
+ begin
+
+    CadSQL := 'select TITULO,ISBN from Libros';
+    DM := Unit4.DataModule4;
+    DM.ConsultarAutores(CadSQL);
+
+
+    DBGrid1.DataSource := nil;
+    DataSourceTitulos.DataSet.Refresh;
+    DBGrid1.DataSource := DataSourceTitulos;
+
+  end;
+
+
+procedure TForm3.DBGrid1DrawColumnCell(Sender: TObject; const Rect: TRect;
+  DataCol: Integer; Column: TColumn; State: TGridDrawState);
+
+  const
+  RowColors: array[Boolean] of Tcolor = (clblue, clwhite);
+  RowSelectedColors: array[boolean] of Tcolor = (clHotLight, clHighlight);
+  var
+   oddRow:boolean;
+  begin
+  if (sender is TDBGrid) then
+  begin
+    oddRow := odd(TDBGrid(sender).DataSource.DataSet.RecNo);
+    if (gdSelected in state) then
+      TDBGrid(Sender).Canvas.Brush.Color := RowSelectedColors[oddRow];
+  end
+  else
+  begin
+      TDBGrid(Sender).Canvas.Brush.Color := RowColors[OddRow];
+      TDBGrid(Sender).DefaultDrawColumnCell(Rect, DataCol, Column, State);
+  end;
+
+
+end;
+
+procedure TForm3.FormCreate(Sender: TObject);
+begin
+  DataModule4.DSLibros.Open;
+  BorderStyle :=  bsDialog;
+  Position := poScreenCenter;
+end;
+
+end.

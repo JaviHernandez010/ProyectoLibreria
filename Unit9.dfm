@@ -2,8 +2,8 @@ object Form9: TForm9
   Left = 0
   Top = 0
   Caption = 'Pantalla9'
-  ClientHeight = 546
-  ClientWidth = 527
+  ClientHeight = 558
+  ClientWidth = 571
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -28,8 +28,8 @@ object Form9: TForm9
     ParentFont = False
   end
   object Label2: TLabel
-    Left = 248
-    Top = 232
+    Left = 281
+    Top = 216
     Width = 175
     Height = 19
     Caption = 'Obtener libros en oferta:'
@@ -143,6 +143,19 @@ object Form9: TForm9
     Font.Style = []
     ParentFont = False
   end
+  object Label11: TLabel
+    Left = 310
+    Top = 274
+    Width = 110
+    Height = 19
+    Caption = 'T'#237'tulo del libro:'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
   object Button2: TButton
     Left = 24
     Top = 24
@@ -155,7 +168,7 @@ object Form9: TForm9
   object DBGrid1: TDBGrid
     Left = 8
     Top = 87
-    Width = 496
+    Width = 537
     Height = 114
     DataSource = DataSourceOfertas
     TabOrder = 1
@@ -187,8 +200,8 @@ object Form9: TForm9
       end>
   end
   object Button1: TButton
-    Left = 429
-    Top = 232
+    Left = 462
+    Top = 216
     Width = 75
     Height = 25
     Caption = 'Buscar'
@@ -205,11 +218,11 @@ object Form9: TForm9
     TabOrder = 3
   end
   object Button3: TButton
-    Left = 429
-    Top = 329
-    Width = 75
+    Left = 441
+    Top = 337
+    Width = 104
     Height = 25
-    Caption = 'Aceptar'
+    Caption = 'Reducir existencias'
     TabOrder = 4
     OnClick = Button3Click
   end
@@ -247,7 +260,7 @@ object Form9: TForm9
     TabOrder = 8
   end
   object Button4: TButton
-    Left = 415
+    Left = 441
     Top = 504
     Width = 104
     Height = 25
@@ -256,13 +269,31 @@ object Form9: TForm9
     OnClick = Button4Click
   end
   object Button5: TButton
-    Left = 321
+    Left = 345
     Top = 504
     Width = 75
     Height = 25
     Caption = 'Nuevo'
     TabOrder = 10
     OnClick = Button5Click
+  end
+  object DBEdit3: TDBEdit
+    Left = 426
+    Top = 272
+    Width = 121
+    Height = 21
+    DataField = 'TITULO'
+    DataSource = DataSourceOfertas
+    TabOrder = 11
+  end
+  object Button6: TButton
+    Left = 337
+    Top = 337
+    Width = 83
+    Height = 25
+    Caption = 'Crear Informe'
+    TabOrder = 12
+    OnClick = Button6Click
   end
   object DataSourceOfertas: TDataSource
     DataSet = DataModule4.DSLibros

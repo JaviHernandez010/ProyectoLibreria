@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls,Unit4, Data.DB, Vcl.Grids,
-  Vcl.DBGrids, Vcl.Mask, Vcl.DBCtrls;
+  Vcl.DBGrids, Vcl.Mask, Vcl.DBCtrls, inifiles;
 
 type
   TForm9 = class(TForm)
@@ -57,21 +57,15 @@ procedure TForm9.Button1Click(Sender: TObject);
 var
  Cad6SQL: string;
  DM: TDataModule4;
- srcAuxiliar: TDatasource;
 begin
- srcAuxiliar := DBGrid1.DataSource;
- DBGrid1.DataSource := nil;
+
 
   Cad6SQL :='select ISBN, titulo,existencias, categoria from libros where categoria = 4;';
 
   DM := Unit4.DataModule4;
   DM.Ofertas(Cad6SQL);
 
-  DBGrid1.DataSource := srcAuxiliar;
 
-
-
-exit;
   DBGrid1.DataSource := nil;
   DataSourceOfertas.DataSet.refresh;
   DBGrid1.DataSource := DataSourceOfertas;

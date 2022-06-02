@@ -1,2 +1,4 @@
 [Datos]
-Nombre=Miguel
+ISBN=4
+Titulo=1984
+Precio=Gratis

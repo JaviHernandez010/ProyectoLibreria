@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls,Unit4, Data.DB, Vcl.Grids,
-  Vcl.DBGrids, Vcl.Mask, Vcl.DBCtrls;
+  Vcl.DBGrids, Vcl.Mask, Vcl.DBCtrls, inifiles;
 
 type
   TForm9 = class(TForm)
@@ -31,23 +31,29 @@ type
     Label10: TLabel;
     Button4: TButton;
     Button5: TButton;
+    Label11: TLabel;
+    DBEdit3: TDBEdit;
+    Button6: TButton;
     procedure Button2Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
     procedure Button4Click(Sender: TObject);
     procedure Button5Click(Sender: TObject);
+    procedure Button6Click(Sender: TObject);
   private
     NumeroExistencias:integer;
     procedure MostrarNumero;
     procedure GetNumero;
     { Private declarations }
   public
+    procedure crearDatos;
     { Public declarations }
   end;
 
 var
   Form9: TForm9;
+  archivoDatos: TIniFile;
 
 implementation
 
@@ -57,10 +63,7 @@ procedure TForm9.Button1Click(Sender: TObject);
 var
  Cad6SQL: string;
  DM: TDataModule4;
- srcAuxiliar: TDatasource;
 begin
- srcAuxiliar := DBGrid1.DataSource;
- DBGrid1.DataSource := nil;
 
 
   Cad6SQL :='select ISBN, titulo,existencias, categoria from libros where categoria = 4;';
@@ -68,7 +71,6 @@ begin
   DM := Unit4.DataModule4;
   DM.Ofertas(Cad6SQL);
 
-  DBGrid1.DataSource := srcAuxiliar;
 
   DBGrid1.DataSource := nil;
   DataSourceOfertas.DataSet.refresh;
@@ -97,6 +99,7 @@ GetNumero;
   dec(NumeroExistencias);
   MostrarNumero;
   ShowMessage('Libro guardado con exito');
+
 end;
 
 procedure TForm9.Button4Click(Sender: TObject);
@@ -119,8 +122,18 @@ begin
 Edit1.Clear;
 Edit2.Clear;
 Edit3.Clear;
-{Se borra el componente directamente}
-Label10.Free;
+end;
+
+procedure TForm9.Button6Click(Sender: TObject);
+begin
+  archivoDatos.WriteString('Datos', 'ISBN', DBEdit1.Text);
+  archivoDatos.WriteString('Datos', 'Titulo', DBEdit3.Text);
+  archivoDatos.WriteString('Datos', 'Precio', 'Gratis');
+end;
+
+procedure TForm9.crearDatos;
+begin
+  archivoDatos:= TIniFile.Create(ExtractFilePath(ParamStr(0))+ '\Datos.txt');
 end;
 
 procedure TForm9.FormCreate(Sender: TObject);
@@ -128,6 +141,7 @@ begin
   DataModule4.DSLibros.Open;
   BorderStyle :=  bsDialog;
   Position := poScreenCenter;
+  crearDatos;
 end;
 
 procedure TForm9.GetNumero;

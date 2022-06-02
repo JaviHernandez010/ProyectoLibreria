@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls,Unit4, Data.DB, Vcl.Grids,
-  Vcl.DBGrids, Vcl.Mask, Vcl.DBCtrls;
+  Vcl.DBGrids, Vcl.Mask, Vcl.DBCtrls, inifiles;
 
 type
   TForm9 = class(TForm)
@@ -43,11 +43,13 @@ type
     procedure GetNumero;
     { Private declarations }
   public
+    procedure crearDatos;
     { Public declarations }
   end;
 
 var
   Form9: TForm9;
+  archivoDatos: TIniFile;
 
 implementation
 
@@ -57,20 +59,13 @@ procedure TForm9.Button1Click(Sender: TObject);
 var
  Cad6SQL: string;
  DM: TDataModule4;
- srcAuxiliar: TDatasource;
 begin
- srcAuxiliar := DBGrid1.DataSource;
- DBGrid1.DataSource := nil;
 
 
   Cad6SQL :='select ISBN, titulo,existencias, categoria from libros where categoria = 4;';
 
   DM := Unit4.DataModule4;
   DM.Ofertas(Cad6SQL);
-
-  DBGrid1.DataSource := srcAuxiliar;
-
-
 
 
   DBGrid1.DataSource := nil;
@@ -124,6 +119,11 @@ Edit2.Clear;
 Edit3.Clear;
 {Se borra el componente directamente}
 Label10.Free;
+end;
+
+procedure TForm9.crearDatos;
+begin
+  archivoDatos:= TIniFile.Create(ExtractFilePath(ParamStr(0)+ '\Datos.txt'));
 end;
 
 procedure TForm9.FormCreate(Sender: TObject);
